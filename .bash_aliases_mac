@@ -1,0 +1,12 @@
+alias c++11='clang++ -std=c++1z -stdlib=libc++'
+alias gemacs=/Applications/Emacs.app/Contents/MacOS/Emacs
+
+notify_complete()
+{
+	osascript -e 'display notification "Script Complete" with title "Complete" ';
+	afplay "/System/Library/Sounds/Glass.aiff"
+}
+alias gnotify='`notify_complete`'
+
+
+

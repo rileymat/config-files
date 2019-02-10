@@ -1,3 +1,6 @@
+
+alias lla='ls -la'
+
 lm()
 {
 	if [ -z "$1" ] 
@@ -29,3 +32,16 @@ gitac()
 {
 	git add -A; git commit -m'AutoCommit'
 }
+
+alias title='printf "\033]0;%s\007" "$1"'
+
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+	if [ -f ~/.bashrc_linux ]; then
+   		source ~/.bash_aliases_linux
+	fi
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+	if [ -f ~/.bashrc_mac ]; then
+		source ~/.bash_aliases_mac
+	fi
+fi
+
