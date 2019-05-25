@@ -4,8 +4,13 @@
              '("melpa" . "https://melpa.org/packages/"))
 
 (setq inhibit-startup-message t)
+(setq inhibit-splash-screen t)
+(setq inhibit-startup-screen t)
+
+
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (add-to-list 'load-path "~/.emacs.d/icicles")
+(add-to-list 'load-path "~/.emacs.d/treemacs")
 
 ;; Do not suspend window.
 (global-unset-key (kbd "C-z"))
@@ -18,6 +23,7 @@
 (require 'windows)
 (require 'smart-tabs-mode)
 (require 'icicles)
+(require 'treemacs)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -129,17 +135,12 @@
 
 
 
-
-
-
 (if (= 1 (length command-line-args)) 
-     (progn
+    (progn
        (interactive)
-       (dirtree "." 1)
+       (treemacs)
        )
   )
-(set-window-dedicated-p (selected-window) 1)
-
 
 (win:startup-with-window)
 (add-hook 'js-mode-hook '(lambda ()
