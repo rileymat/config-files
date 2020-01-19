@@ -18,7 +18,14 @@
 (require 'windows)
 (require 'smart-tabs-mode)
 (require 'icicles)
+(require 'multiple-cursors)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;; Custom Mouse Binding
+(global-unset-key (kbd "M-<down-mouse-1>"))
+(global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click)
+
 
 
 ;; Custom Key Bindings
@@ -29,8 +36,16 @@
 (global-set-key (kbd "<C-s-right>")  'buf-move-right)
 (global-set-key (kbd "<C-s-d>") 'lock-window-selected-window)
 (global-set-key (kbd "C-x C-b") 'buffer-menu)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+;; Allows winmove to move cursor from window to window (Not move windows around)
+(when (fboundp 'windmove-default-keybindings)
+  (windmove-default-keybindings))
+
+(define-key ctl-x-map "C" 'see-you-again)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(win:startup-with-window)
 
 ;; Default startup modes
 (icy-mode 1)
@@ -53,10 +68,20 @@
 (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 4)))
 (smart-tabs-advice js2-indent-line js2-basic-offset)
 (setq default-tab-width 4)
-
+(setq-default indent-tabs-mode nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+;; Python Config
+
+(add-hook 'python-mode-hook
+	    (lambda ()
+		  (setq tab-width 4)
+		  (setq py-indent-tabs-mode t)
+		  (setq python-indent-offset 4)
+		  ))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; CSS/HTML Config
 
@@ -66,8 +91,9 @@
 (add-hook 'html-mode-hook
           (lambda()
             (setq tab-width 4)
-	    (setq sgml-basic-offset 4)
+			(setq sgml-basic-offset 4)
             (setq indent-tabs-mode t)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Org Mode Config
@@ -81,7 +107,7 @@
 
 ;; Set Default formats
 (setq tab-width 4)
-(smart-tabs-insinuate 'c 'c++ 'javascript)
+(smart-tabs-insinuate 'c 'c++ 'javascript 'python)
 
 ;; Try to avoid poluting working directory
 (setq backup-directory-alist
@@ -112,22 +138,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;; Allows winmove to move cursor from window to window (Not move windows around
-(when (fboundp 'windmove-default-keybindings)
-  (windmove-default-keybindings))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
 (eval-after-load "tree-widget"
   '(if (boundp 'tree-widget-themes-load-path)
        (add-to-list 'tree-widget-themes-load-path "~/.emacs.d/")))
 (autoload 'imenu-tree "imenu-tree" "Imenu tree" t)
 (autoload 'tags-tree "tags-tree" "TAGS tree" t)
-
-
-
-
 
 
 
@@ -151,7 +166,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(org-agenda-files (quote ("~/Desktop/projects/todo.org")))
- '(package-selected-packages (quote (js2-refactor js2-mode))))
+ '(package-selected-packages (quote (multiple-cursors js2-refactor js2-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -161,3 +176,5 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
+(fset 'insert-python-main
+   "def main():\C-mpass\C-m\C-mif __name__==\"__main__\":\C-mmain()\C-m\C-?")
