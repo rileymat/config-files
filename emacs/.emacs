@@ -4,8 +4,13 @@
              '("melpa" . "https://melpa.org/packages/"))
 
 (setq inhibit-startup-message t)
+(setq inhibit-splash-screen t)
+(setq inhibit-startup-screen t)
+
+
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (add-to-list 'load-path "~/.emacs.d/icicles")
+(add-to-list 'load-path "~/.emacs.d/treemacs")
 
 ;; Do not suspend window.
 (global-unset-key (kbd "C-z"))
@@ -19,6 +24,7 @@
 (require 'smart-tabs-mode)
 (require 'icicles)
 (require 'multiple-cursors)
+;;(require 'treemacs)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -69,6 +75,7 @@
 (smart-tabs-advice js2-indent-line js2-basic-offset)
 (setq default-tab-width 4)
 (setq-default indent-tabs-mode nil)
+(setq-default tab-stop-list    ())
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -137,7 +144,6 @@
 (set-frame-size-according-to-resolution)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
 (eval-after-load "tree-widget"
   '(if (boundp 'tree-widget-themes-load-path)
        (add-to-list 'tree-widget-themes-load-path "~/.emacs.d/")))
@@ -147,13 +153,11 @@
 
 
 (if (= 1 (length command-line-args)) 
-     (progn
+    (progn
        (interactive)
        (dirtree "." 1)
        )
   )
-(set-window-dedicated-p (selected-window) 1)
-
 
 (win:startup-with-window)
 (add-hook 'js-mode-hook '(lambda ()
@@ -178,3 +182,18 @@
 
 (fset 'insert-python-main
    "def main():\C-mpass\C-m\C-mif __name__==\"__main__\":\C-mmain()\C-m\C-?")
+
+
+(setq pop-up-windows nil)
+
+(defun my-display-buffer-function (buf not-this-window)
+  (if (and (not pop-up-frames) (one-window-p)
+           (or not-this-window (not (eq (window-buffer (selected-window)) buf))) (> (frame-width) 162))
+      (split-window-horizontally))
+  ;; Note: Some modules sets `pop-up-windows' to t before calling
+  ;; `display-buffer' -- Why, oh, why!
+  (let ((display-buffer-function nil)
+        (pop-up-windows nil))
+    (display-buffer buf not-this-window)))
+
+(setq display-buffer-function 'my-display-buffer-function)
