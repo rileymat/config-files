@@ -156,6 +156,7 @@
     (progn
        (interactive)
        (dirtree "." 1)
+       (set-window-dedicated-p (selected-window) t)
        )
   )
 
