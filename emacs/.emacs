@@ -10,7 +10,7 @@
 
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (add-to-list 'load-path "~/.emacs.d/icicles")
-(add-to-list 'load-path "~/.emacs.d/treemacs")
+
 
 ;; Do not suspend window.
 (global-unset-key (kbd "C-z"))
@@ -20,11 +20,10 @@
 (require 'dirtree)
 (require 'buffer-move)
 (require 'web-mode)
-(require 'windows)
 (require 'smart-tabs-mode)
 (require 'icicles)
 (require 'multiple-cursors)
-;;(require 'treemacs)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -48,10 +47,10 @@
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
 
-(define-key ctl-x-map "C" 'see-you-again)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(win:startup-with-window)
+
 
 ;; Default startup modes
 (icy-mode 1)
