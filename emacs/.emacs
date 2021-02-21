@@ -7,9 +7,9 @@
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-screen t)
 
-
+;;(load "~/.emacs.d/icicles/icicles-install")
 (add-to-list 'load-path "~/.emacs.d/lisp/")
-(add-to-list 'load-path "~/.emacs.d/icicles")
+;;(add-to-list 'load-path "~/.emacs.d/icicles")
 
 
 ;; Do not suspend window.
@@ -21,7 +21,7 @@
 (require 'buffer-move)
 (require 'web-mode)
 (require 'smart-tabs-mode)
-(require 'icicles)
+;;(require 'icicles)
 (require 'multiple-cursors)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -53,7 +53,7 @@
 
 
 ;; Default startup modes
-(icy-mode 1)
+;;(icy-mode 1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -159,7 +159,7 @@
        )
   )
 
-(win:startup-with-window)
+;;(win:startup-with-window)
 (add-hook 'js-mode-hook '(lambda ()
   (local-set-key (kbd "RET") 'newline-and-indent)))
 
