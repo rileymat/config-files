@@ -1,11 +1,24 @@
-(package-initialize)
 
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
 
+
+(require 'package)
+(package-initialize)
+
 (setq inhibit-startup-message t)
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-screen t)
+
+(require 'lsp-mode)
+
+(require 'eglot)
+(add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+;;(add-hook 'c-mode-hook 'eglot-ensure)
+(add-hook 'c++-mode-hook 'eglot-ensure)
+
+
+(add-hook 'after-init-hook 'global-company-mode)
 
 (delete-selection-mode 1)  ;;This means when you highlight and hit the delete key it deletes.
 
@@ -81,7 +94,12 @@
 ;;(icy-mode 1)
 
 (custom-set-variables
- '(package-selected-packages '(lsp-mode ## multiple-cursors js2-refactor js2-mode))
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(company eglot lsp-mode ## multiple-cursors js2-refactor js2-mode))
  '(tab-stop-list
    '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96 100 104 108 112 116 120)))
 
@@ -150,6 +168,7 @@
  )
 
 (add-hook 'c++-mode-hook 'custom-c++-mode-hook )
+(add-hook 'custom-c++mode-hook #'lsp)
 
 ;; Python Config
 
