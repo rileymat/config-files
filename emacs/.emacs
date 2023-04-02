@@ -14,7 +14,6 @@
 
 (require 'eglot)
 (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
-;;(add-hook 'c-mode-hook 'eglot-ensure)
 (add-hook 'c++-mode-hook 'eglot-ensure)
 
 
@@ -34,12 +33,11 @@
 
 ;; 3rd Party Requires
 
-(require 'dirtree)
 (require 'buffer-move)
 (require 'web-mode)
 (require 'smart-tabs-mode)
-;;(require 'icicles)
 (require 'multiple-cursors)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -63,8 +61,8 @@
 (global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click)
 
 
-(global-set-key (kbd "M-.") 'mc/mark-next-like-this)
-(global-set-key (kbd "M-,") 'mc/unmark-next-like-this)
+(global-set-key [(meta down)] 'mc/mark-next-like-this)
+;;(global-set-key (kbd "M-,") 'mc/unmark-next-like-this)
 
 
 ;; Custom Key Bindings
@@ -79,6 +77,9 @@
 
 (global-set-key [(meta shift up)]  'move-line-up)
 (global-set-key [(meta shift down)]  'move-line-down)
+
+(global-set-key [(meta *)] 'pop-tag-mark)
+
 
 ;; Allows winmove to move cursor from window to window (Not move windows around)
 (when (fboundp 'windmove-default-keybindings)
@@ -99,7 +100,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(company eglot lsp-mode ## multiple-cursors js2-refactor js2-mode))
+   '(neotree company eglot lsp-mode ## multiple-cursors js2-refactor js2-mode))
  '(tab-stop-list
    '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96 100 104 108 112 116 120)))
 
@@ -246,11 +247,7 @@
 
 
 (if (= 1 (length command-line-args)) 
-    (progn
-       (interactive)
-       (dirtree "." 1)
-       (set-window-dedicated-p (selected-window) t)
-       )
+	(add-hook 'after-init-hook #'neotree-toggle)
   )
 
 ;;(win:startup-with-window)
@@ -284,7 +281,6 @@
         (pop-up-windows nil))
     (display-buffer buf not-this-window)))
 
+(require 'neotree)
+(global-set-key [f8] 'neotree-toggle)
 
-;;(setq display-buffer-function 'my-display-buffer-function)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
