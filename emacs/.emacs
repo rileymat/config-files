@@ -56,7 +56,7 @@
 ;;(icy-mode 1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 
 ;; Java Script Config
 
