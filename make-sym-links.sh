@@ -2,6 +2,7 @@ mkdir ~/.makesymback
 
 
 backupAndLink(){
+	rm -rf  ~/.makesymback/$1
 	mv ~/$1  ~/.makesymback/$1
 	ln -s "$(readlink -f ./$2/$1)" ~/$1
 }
