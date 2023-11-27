@@ -4,7 +4,7 @@ export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; histor
 export HISTCONTROL=ignoreboth:erasedups
 
 PATH=$PATH:~/Scripts
-
+export BASH_SILENCE_DEPRECATION_WARNING=1
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
 	if [ -f ~/.bashrc_linux ]; then
